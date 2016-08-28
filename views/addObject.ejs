@@ -1,0 +1,51 @@
+<% include head %>
+<script>
+  var myCenter=new google.maps.LatLng("48.209206","16.372778");
+  <% if (typeof data != 'undefined') { %>
+    myCenter=new google.maps.LatLng(<%= data.gps_lat %>,<%= data.gps_lan %>);
+  <% } %>
+
+
+  function initialize() {
+    var mapProp = {
+      center:myCenter,
+      zoom:15,
+      mapTypeId:google.maps.MapTypeId.ROADMAP
+    };
+    var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+    var marker=new google.maps.Marker({
+      position:myCenter,
+    });
+
+    marker.setMap(map);
+    google.maps.event.addListener(map, "dblclick", function (e) {
+        document.getElementById("latId").value = e.latLng.lat();
+        document.getElementById("lanId").value = e.latLng.lng();
+        marker.setPosition(e.latLng);
+    });
+  }
+  google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+
+<div class="addObjectForm">
+    <form action="/places/add" method="POST" >
+      <input type="hidden" name="id" <% if (typeof data != 'undefined') { %> value="<%= data.id %>" <% } %> >
+      <input type="text" class="width100" placeholder="name" name="name" <% if (typeof data != 'undefined') { %> value="<%= data.name %>" <% } %> >
+      <input type="text" class="width100" placeholder="description" name="description" <% if (typeof data != 'undefined') { %> value="<%= data.description %>" <% } %> >
+
+      <input type="text" class="width100" placeholder="address" name="address" <% if (typeof data != 'undefined') { %> value="<%= data.address %>" <% } %> >
+      <input type="text" class="width100" placeholder="lat" id="latId" name="lat" <% if (typeof data != 'undefined') { %> value="<%= data.gps_lat %>" <% } %> >
+      <input type="text" class="width100" placeholder="lan" id="lanId" name="lan" <% if (typeof data != 'undefined') { %> value="<%= data.gps_lan %>" <% } %> >
+      <input type="text" class="width100" placeholder="email" name="email" <% if (typeof data != 'undefined') { %> value="<%= data.email %>" <% } %> >
+      <input type="text" class="width100" placeholder="phone" name="phone" <% if (typeof data != 'undefined') { %> value="<%= data.phone %>" <% } %> >
+      <input type="text" class="width100" placeholder="website" name="website" <% if (typeof data != 'undefined') { %> value="<%= data.website %>" <% } %> >
+
+      <button type="submit" class="btn btn-success btn-round btn-xs pull-right">Submit</button>
+    </form>
+
+    <a href="/" class="btn btn-info btn-round btn-xs"> Back </a>
+</div>
+<div id="googleMap" class="googleMap" style="width:500px;height:380px;"></div>
+
+<% include foot %>

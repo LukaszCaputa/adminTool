@@ -1,0 +1,12 @@
+<% include head %>
+  <h2>Places: </h2>
+
+  <ul>
+    <% data.forEach(function(data) { %>
+      <li><%= data.name %> - <%= data.description %> <a href="places/edit/<%= data.id %> " class="btn btn-primary btn-round btn-xs">EDIT</a> </li>
+    <% }); %>
+  </ul>
+
+  <a href="places/add" class="btn btn-info btn-round btn-s">Add new place</a>
+  <a href="/manageCategories" class="btn btn-info btn-round btn-s">Manage categories</a>
+<% include foot %>

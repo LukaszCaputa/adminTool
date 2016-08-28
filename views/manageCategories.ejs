@@ -1,0 +1,17 @@
+<% include head %>
+
+
+      <h2>Categories: </h2>
+
+      <ul>
+          <% data.forEach(function(data) { %>
+              <li><%= data.id %> - <%= data.name %>
+                <a href="manageCategories/edit/<%= data.id %> " class="btn btn-primary btn-round btn-xs">EDIT</a>
+                <a href="manageCategories/remove/<%= data.id %> " class="btn btn-warning btn-round btn-xs">Remove</a>
+              </li>
+          <% }); %>
+      </ul>
+
+<a href="/" class="btn btn-info btn-round btn-xs"> Back </a>
+<a href="/manageCategories/add" class="btn btn-info btn-round btn-s">Add new categories</a>
+<% include foot %>

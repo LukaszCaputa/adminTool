@@ -1,0 +1,19 @@
+.wrap {
+    width:70%;
+    height: 100%;
+    margin:0 auto;
+}
+.addObjectForm{
+  margin:0 auto;
+  width:30%;
+}
+
+.width100{
+  width: 100%;
+  margin-top: 15px;
+}
+
+.googleMap{
+
+  margin: 0 auto 0 auto;
+}
