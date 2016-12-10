@@ -1,9 +1,24 @@
 <% include head %>
+
+<% if (typeof removed != 'undefined') { %>  
+<div class="alert alert-success">
+	            <div class="container-fluid">
+					<div class="alert-icon">
+						<i class="material-icons">check</i>
+					</div>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true"><i class="material-icons">clear</i></span>
+					</button>
+	            	<b>Success Alert:</b> Yuhuuu! You've removed entry id: <%= removed %>
+	            </div>
+	        </div>
+<% } %>
+
   <h2>Places: </h2>
 
   <ul>
     <% data.forEach(function(data) { %>
-      <li><%= data.name %> - <%= data.description %> <a href="places/edit/<%= data.id %> " class="btn btn-primary btn-round btn-xs">EDIT</a> </li>
+      <li><%= data.name %> - <%= data.description %> <a href="places/edit/<%= data.id %> " class="btn btn-primary btn-round btn-xs">Edit</a> <a href="places/remove/<%= data.id %> " class="btn btn-danger btn-round btn-xs">Remove</a></li>
     <% }); %>
   </ul>
 

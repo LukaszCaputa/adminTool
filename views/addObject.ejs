@@ -31,15 +31,16 @@
 <div class="addObjectForm">
     <form action="/places/add" method="POST" >
       <input type="hidden" name="id" <% if (typeof data != 'undefined') { %> value="<%= data.id %>" <% } %> >
-      <input type="text" class="width100" placeholder="name" name="name" <% if (typeof data != 'undefined') { %> value="<%= data.name %>" <% } %> >
-      <input type="text" class="width100" placeholder="description" name="description" <% if (typeof data != 'undefined') { %> value="<%= data.description %>" <% } %> >
 
-      <input type="text" class="width100" placeholder="address" name="address" <% if (typeof data != 'undefined') { %> value="<%= data.address %>" <% } %> >
-      <input type="text" class="width100" placeholder="lat" id="latId" name="lat" <% if (typeof data != 'undefined') { %> value="<%= data.gps_lat %>" <% } %> >
-      <input type="text" class="width100" placeholder="lan" id="lanId" name="lan" <% if (typeof data != 'undefined') { %> value="<%= data.gps_lan %>" <% } %> >
-      <input type="text" class="width100" placeholder="email" name="email" <% if (typeof data != 'undefined') { %> value="<%= data.email %>" <% } %> >
-      <input type="text" class="width100" placeholder="phone" name="phone" <% if (typeof data != 'undefined') { %> value="<%= data.phone %>" <% } %> >
-      <input type="text" class="width100" placeholder="website" name="website" <% if (typeof data != 'undefined') { %> value="<%= data.website %>" <% } %> >
+      <label class="control-label" for="name">Name</label>  <input type="text" class="form-control" placeholder="name" id="name" name="name" <% if (typeof data != 'undefined') { %> value="<%= data.name %>" <% } %> >
+      <label class="control-label" for="description">Description</label> <input type="text" class="form-control" placeholder="description" id="description" name="description" <% if (typeof data != 'undefined') { %> value="<%= data.description %>" <% } %> >
+
+      <label class="control-label" for="address">Address</label> <input type="text" class="form-control" placeholder="address" id="address" name="address" <% if (typeof data != 'undefined') { %> value="<%= data.address %>" <% } %> >
+      <label class="control-label" for="latId">Lat</label> <input type="text" class="form-control" placeholder="lat" id="latId" name="lat" <% if (typeof data != 'undefined') { %> value="<%= data.gps_lat %>" <% } %> >
+      <label class="control-label" for="lanId">Lan</label> <input type="text" class="form-control" placeholder="lan" id="lanId" name="lan" <% if (typeof data != 'undefined') { %> value="<%= data.gps_lan %>" <% } %> >
+      <label class="control-label" for="email">E-mail</label> <input type="text" class="form-control" placeholder="email" id="email" name="email" <% if (typeof data != 'undefined') { %> value="<%= data.email %>" <% } %> >
+      <label class="control-label" for="phone">Phone</label> <input type="text" class="form-control" placeholder="phone" id="phone" name="phone" <% if (typeof data != 'undefined') { %> value="<%= data.phone %>" <% } %> >
+      <label class="control-label"for="website">Website</label> <input type="text" class="form-control" placeholder="website" id="website" name="website" <% if (typeof data != 'undefined') { %> value="<%= data.website %>" <% } %> >
 
       <button type="submit" class="btn btn-success btn-round btn-xs pull-right">Submit</button>
     </form>
@@ -47,5 +48,31 @@
     <a href="/" class="btn btn-info btn-round btn-xs"> Back </a>
 </div>
 <div id="googleMap" class="googleMap" style="width:500px;height:380px;"></div>
+
+
+
+<% if (typeof cat != 'undefined') { %>
+  <h3>Current categories</h3>
+
+  <% cat.forEach(function(cat) { %>
+    
+    <% if (typeof cat.rid == 'number') { %> 
+      <%= cat.name %> <%= cat.rid %> <a href="/relationships/remove/1/<%= data.id %>/<%= cat.rid %>" class="btn btn-danger btn-round btn-xs"> Remove </a>
+      <br>
+    <% } %>
+
+   <% }); %>
+
+  <h3>Available categories</h3>
+
+  <% cat.forEach(function(cat) { %>
+    
+    <% if (typeof cat.rid != 'number') { %> 
+      <%= cat.name %> <a href="/relationships/add/1/<%= data.id %>/<%= cat.id %>" class="btn btn-success btn-round btn-xs"> Add </a>
+      <br>
+    <% } %>
+
+   <% }); %>
+  <% } %>
 
 <% include foot %>

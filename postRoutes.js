@@ -1,13 +1,15 @@
 module.exports = function(router, db) {
 
   router.post('/addCategory', function(req,res){
-    if(req.body.id === ''){
+    if( typeof req.body.id == 'undefined'){
+      console.log('we are in !');
       var stmt = db.prepare("INSERT into s_categories (name) VALUES (?)");
       stmt.run(req.body.name, function(err) {
         console.warn("inserted id:", this.lastID);
       });
       stmt.finalize();
     }else{
+      console.log('we are out !' + req.body.id);
       var updateStmt1 = db.prepare("UPDATE s_categories set name=? where id=?");
       updateStmt1.bind(req.body.name, req.body.id);
       updateStmt1.run(function(err) {
@@ -21,6 +23,7 @@ module.exports = function(router, db) {
 
   router.post('/places/add', function(req,res){
     console.log(typeof req.body.id);
+    var objectId;
     if(req.body.id === ''){
       console.log("ID IS NULL");
       var addressId;
@@ -38,13 +41,15 @@ module.exports = function(router, db) {
               // err is null if insertion was successful
               console.warn("inserted id:", this.lastID);
               addressId = this.lastID
+              objectId = this.lastID;
+              red();
           });
           var test = stmt2.finalize();
 
 
       });
-      console.log('hwdp',addressId)
       stmt.finalize();
+      
     }else{
       console.log("Got ID " + req.body.id);
       var updateStmt1 = db.prepare("UPDATE d_places set name=?, description=? where id=?");
@@ -62,10 +67,14 @@ module.exports = function(router, db) {
             console.log("2phii " + err)
           }
       });
-
+      objectId = req.body.id;
+      red();
     }
     /**/
-    res.redirect('/');
+    var red = function(){
+      res.redirect('/places/edit/'+objectId);
+    }
+    
   });
 
 }
