@@ -104,4 +104,14 @@ module.exports = function(router, db) {
 
   });
 
+
+  router.get('/generateJson', function(req, res) {
+    db.all("Select dp.id, dp.name, dp.description, da.address, da.gps_lat, da.gps_lan, da.email, da.phone, da.website from d_places dp join d_address da on da.id = dp.address", function(err, rows) {
+      res.send(JSON.stringify(rows));
+    });
+
+
+  });
+  
+
 };
