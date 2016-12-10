@@ -7,7 +7,7 @@
           <% data.forEach(function(data) { %>
               <li><%= data.id %> - <%= data.name %>
                 <a href="manageCategories/edit/<%= data.id %> " class="btn btn-primary btn-round btn-xs">EDIT</a>
-                <a href="manageCategories/remove/<%= data.id %> " class="btn btn-warning btn-round btn-xs">Remove</a>
+                <a href="manageCategories/remove/<%= data.id %> " class="btn btn-danger btn-round btn-xs">Remove</a>
               </li>
           <% }); %>
       </ul>

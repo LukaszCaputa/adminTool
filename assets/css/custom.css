@@ -17,3 +17,8 @@
 
   margin: 0 auto 0 auto;
 }
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
