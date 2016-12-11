@@ -22,6 +22,9 @@ module.exports = function(router, db) {
   router.post('/places/add', function(req,res){
     console.log(typeof req.body.id);
     var objectId;
+    var red = function(){
+      res.redirect('/places/edit/'+objectId);
+    }
     if(req.body.id === ''){
       var addressId;
 
@@ -66,9 +69,7 @@ module.exports = function(router, db) {
       red();
     }
     /**/
-    var red = function(){
-      res.redirect('/places/edit/'+objectId);
-    }
+    
     
   });
 

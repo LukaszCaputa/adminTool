@@ -1,12 +1,12 @@
 {
-  "name": "test",
+  "name": "Admin Tool",
   "version": "1.0.0",
-  "description": "bla",
+  "description": "The tool to manage small sqlite db for storing places",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Lukasz Caputa",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.2",
