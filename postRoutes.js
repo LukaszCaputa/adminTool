@@ -2,19 +2,17 @@ module.exports = function(router, db) {
 
   router.post('/addCategory', function(req,res){
     if( typeof req.body.id == 'undefined'){
-      console.log('we are in !');
       var stmt = db.prepare("INSERT into s_categories (name) VALUES (?)");
       stmt.run(req.body.name, function(err) {
         console.warn("inserted id:", this.lastID);
       });
       stmt.finalize();
     }else{
-      console.log('we are out !' + req.body.id);
       var updateStmt1 = db.prepare("UPDATE s_categories set name=? where id=?");
       updateStmt1.bind(req.body.name, req.body.id);
       updateStmt1.run(function(err) {
           if(err != null){
-            console.log("1phii " + err)
+            console.log("error " + err)
           }
       });
     }
@@ -25,7 +23,6 @@ module.exports = function(router, db) {
     console.log(typeof req.body.id);
     var objectId;
     if(req.body.id === ''){
-      console.log("ID IS NULL");
       var addressId;
 
       var stmt = db.prepare("INSERT into d_address(address,gps_lat,gps_lan,email,phone,website) VALUES (?,?,?,?,?,?)");
@@ -45,8 +42,6 @@ module.exports = function(router, db) {
               red();
           });
           var test = stmt2.finalize();
-
-
       });
       stmt.finalize();
       
@@ -56,7 +51,7 @@ module.exports = function(router, db) {
       updateStmt1.bind(req.body.name, req.body.description, req.body.id);
       updateStmt1.run(function(err) {
           if(err != null){
-            console.log("1phii " + err)
+            console.log("errpr " + err)
           }
       });
 
@@ -64,7 +59,7 @@ module.exports = function(router, db) {
       updateStmt2.bind(req.body.address, req.body.lat, req.body.lan, req.body.email, req.body.phone, req.body.website, req.body.id );
       updateStmt2.run(function(err) {
           if(err != null){
-            console.log("2phii " + err)
+            console.log("error " + err)
           }
       });
       objectId = req.body.id;

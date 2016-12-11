@@ -54,15 +54,12 @@ module.exports = function(router, db) {
       db.all("Select sc.id, sc.name, dr.id as rid from s_categories sc left outer join d_relationships dr on dr.id_c = sc.id and dr.status=1 and dr.relationship=1 and dr.id_p = "+ req.params.id, function(err, rows) {
         
         categories= rows;
-        console.log('test'+categories);
         renderResponse();
       });
       
     }
 
     var renderResponse = function(){
-      console.log('test2'+placeData);
-      console.log('test2'+categories);
       res.render('addObject.ejs', {data: placeData, cat: categories});
     }
     
