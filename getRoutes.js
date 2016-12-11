@@ -106,12 +106,27 @@ module.exports = function(router, db) {
 
 
   router.get('/generateJson', function(req, res) {
-    db.all("Select dp.id, dp.name, dp.description, da.address, da.gps_lat, da.gps_lan, da.email, da.phone, da.website from d_places dp join d_address da on da.id = dp.address", function(err, rows) {
-      res.send(JSON.stringify(rows));
-    });
+    var result = [];
+    
+    function sendResponse() {
+      console.log('!!! Sending results');
+      res.send(JSON.stringify(result));
+    };
 
+    function fillResult(){
+      db.each("Select dp.id, dp.name, dp.description, da.address, da.gps_lat, da.gps_lan, da.email, da.phone, da.website from d_places dp join d_address da on da.id = dp.address", function(err, row) {
+        db.all("Select * from d_relationships dr join s_categories sc on sc.id= dr.id_c and dr.status=1 and dr.relationship=1 and dr.id_p = "+ row.id, function(err, categories) {
+          row.cate = categories;
+          console.log('-- pushing');
+          result.push(row);
+          
+        });
 
+      }, sendResponse);
+    };
+    fillResult();
   });
   
 
 };
+
