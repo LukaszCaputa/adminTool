@@ -23,6 +23,13 @@ module.exports = function(router, db) {
       console.log('removed')
     });
     stmt.finalize();
+
+    var stmtRelations = db.prepare("delete from d_relationships where relationship = 1 and id_c =? ");
+    stmtRelations.run(req.params.id,  function(err) {
+      console.log('removed')
+    });
+    stmtRelations.finalize();
+
     res.redirect('/manageCategories');
   });
 
@@ -67,12 +74,25 @@ module.exports = function(router, db) {
 
   router.get('/places/remove/:id', function(req, res) {
 
+    var stmtPlaces = db.prepare("delete from d_address where id = (Select address from d_places where id = ? ) ");
+    stmtPlaces.run(req.params.id,  function(err) {
+      console.log('removed address')
+    });
+    stmtPlaces.finalize();
+
+    var stmtRelations = db.prepare("delete from d_relationships where relationship =1 and id_p = ?");
+    stmtRelations.run(req.params.id,  function(err) {
+      console.log('removed relationships')
+    });
+    stmtRelations.finalize();
+
 
     var stmt = db.prepare("delete from d_places where id = ? ");
     stmt.run(req.params.id,  function(err) {
-      console.log('removed')
+      console.log('removed place')
     });
     stmt.finalize();
+    
     res.redirect('/places');
 
 
@@ -112,9 +132,11 @@ module.exports = function(router, db) {
 
     function fillResult(){
       db.each("Select dp.id, dp.name, dp.description, da.address, da.gps_lat, da.gps_lan, da.email, da.phone, da.website from d_places dp join d_address da on da.id = dp.address", function(err, row) {
+        console.log('error: '+err);
         db.all("Select * from d_relationships dr join s_categories sc on sc.id= dr.id_c and dr.status=1 and dr.relationship=1 and dr.id_p = "+ row.id, function(err, categories) {
+          console.log('2error: '+err);
           row.cate = categories;
-          console.log('-- pushing');
+          console.log('-- pushing' + row);
           result.push(row);
           
         });
